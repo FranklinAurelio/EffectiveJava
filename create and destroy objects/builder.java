@@ -4,14 +4,14 @@ com diferentes números de parâmetros, cada um chamando o próximo construtor c
 Esse padrão pode levar a código difícil de ler e manter, especialmente quando há muitos parâmetros opcionais.
 
 Não é escalavel!
-*/ 
+*/
 
 public class NutritionFacts {
     private final int servingSize; // (mL) required
-    private final int servings;    // (per container) required
-    private final int calories;     // optional
-    private final int fat;          // (g) optional
-    private final int sodium;       // (mg) optional
+    private final int servings; // (per container) required
+    private final int calories; // optional
+    private final int fat; // (g) optional
+    private final int sodium; // (mg) optional
     private final int carbohydrate; // (g) optional
 
     public NutritionFacts(int servingSize, int servings) {
@@ -27,12 +27,12 @@ public class NutritionFacts {
     }
 
     public NutritionFacts(int servingSize, int servings, int calories,
-                          int fat, int sodium) {
+            int fat, int sodium) {
         this(servingSize, servings, calories, fat, sodium, 0);
     }
 
     public NutritionFacts(int servingSize, int servings, int calories,
-                          int fat, int sodium, int carbohydrate) {
+            int fat, int sodium, int carbohydrate) {
         this.servingSize = servingSize;
         this.servings = servings;
         this.calories = calories;
@@ -43,11 +43,15 @@ public class NutritionFacts {
 }
 
 /*
-Padrão JavaBeans (JavaBeans pattern) - Um padrão de projeto que consiste em criar uma classe com um construtor sem argumentos e métodos setter para cada campo.
-Esse padrão é mais legível e flexível do que o padrão telescoping constructor, mas não é imutável e pode levar a objetos em estados inconsistentes.
-
-Permite a inconsistência de estado, autoriza a mutabilidade.
-*/
+ * Padrão JavaBeans (JavaBeans pattern) - Um padrão de projeto que consiste em
+ * criar uma classe com um construtor sem argumentos e métodos setter para cada
+ * campo.
+ * Esse padrão é mais legível e flexível do que o padrão telescoping
+ * constructor, mas não é imutável e pode levar a objetos em estados
+ * inconsistentes.
+ * 
+ * Permite a inconsistência de estado, autoriza a mutabilidade.
+ */
 
 public class NutritionFacts {
     //Parametros iniciados com valores padrão (se houver)
@@ -178,7 +182,7 @@ NutritionFacts cocaCola = new NutritionFacts.Builder(240, 8)
 
 //Padrão Builder para hierarquias de classes 
 
-publica abstract class Pizza {
+public abstract class Pizza {
     public enum Topping { HAM, MUSHROOM, ONION, PEPPER, SAUSAGE }
     final Set<Topping> toppings;
 
