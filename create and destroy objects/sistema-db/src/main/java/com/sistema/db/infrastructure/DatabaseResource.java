@@ -49,7 +49,7 @@ public class DatabaseResource implements AutoCloseable {
         this.cleanable = CLEANER.register(this, state);
         // Reserva um buffer de 1 MB para simular memória usada pelo recurso.
         this.dataBuffer = new byte[1024 * 1024];
-        System.out.println("Database resource created");
+        System.out.println("Database resource created" + dataBuffer.length + " bytes allocated");
     }
 
     // Simula uma operação que utiliza o recurso.
