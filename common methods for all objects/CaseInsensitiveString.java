@@ -50,7 +50,8 @@ public final class CaseInsensitiveString {
     }
 }
 
-// Exemplo de uma classe que representa um ponto em um plano (coordenadas x e y).
+// Exemplo de uma classe que representa um ponto em um plano (coordenadas x e
+// y).
 // Este exemplo deve ficar em Point.java, separado das outras classes públicas.
 public class Point {
     // Coordenadas imutáveis: são definidas no construtor e não mudam depois.
@@ -155,7 +156,8 @@ public static boolean isOnUnitCircle(Point p) {
     return unitCircle.contains(p);
 }
 
-// Subclasse de Point que conta quantas instâncias de CounterPoint foram criadas.
+// Subclasse de Point que conta quantas instâncias de CounterPoint foram
+// criadas.
 // Como estende Point, ela herda as coordenadas e a implementação de hashCode.
 public class CounterPoint extends Point {
     // Contador compartilhado por todas as instâncias.
@@ -187,4 +189,60 @@ public class CounterPoint extends Point {
             return o.equals(this);
         return super.equals(o);
     }
+}
+
+// Exemplo de uma classe que representa um número de telefone dividido em
+// código de área, prefixo e número da linha.
+// Em um projeto Java, esta classe pública deve ficar em PhoneNumber.java.
+public final class PhoneNumber {
+    // Guarda as três partes do telefone.
+    // "private" protege os campos contra alterações externas e "final" faz
+    // com que sejam definidos somente durante a construção do objeto.
+    // short é um tipo inteiro menor que int; os limites abaixo cabem nele.
+    private final short areaCode, prefix, lineNum;
+
+    // Recebe as partes como int e valida cada uma antes de guardá-la.
+    // Usar int como parâmetro é conveniente para quem chama o construtor;
+    // depois da validação, os valores são armazenados como short.
+    public PhoneNumber(int areaCode, int prefix, int lineNum) {
+        this.areaCode = rangeCheck(areaCode, 999, "area code");
+        this.prefix = rangeCheck(prefix, 999, "prefix");
+        this.lineNum = rangeCheck(lineNum, 9999, "line num");
+    }
+
+    // Método auxiliar que verifica se um número está entre zero e o limite
+    // permitido. "static" permite chamá-lo sem uma instância de PhoneNumber,
+    // pois a validação não depende dos dados de um objeto já criado.
+    private static short rangeCheck(int val, int max, String arg) {
+        // Se o valor estiver fora do intervalo, a construção não pode continuar.
+        // IllegalArgumentException informa que quem chamou forneceu um valor inválido.
+        if (val < 0 || val > max)
+            throw new IllegalArgumentException(arg + ": " + val);
+
+        // O cast converte int para short. É seguro aqui porque o valor já foi
+        // validado e os limites usados pelo construtor cabem no tipo short.
+        return (short) val;
+    }
+
+    // Define igualdade pelo conteúdo das três partes do telefone,
+    // em vez de verificar se as referências apontam para o mesmo objeto.
+    @Override
+    public boolean equals(Object o) {
+        // Um objeto é sempre igual a si mesmo; esta verificação também evita
+        // as comparações seguintes quando as referências são idênticas.
+        if (o == this)
+            return true;
+
+        // Telefones de outro tipo não podem ser iguais a este.
+        if (!(o instanceof PhoneNumber))
+            return false;
+
+        // Depois de confirmar o tipo, converte Object para PhoneNumber para
+        // poder acessar os campos do outro telefone.
+        PhoneNumber pn = (PhoneNumber) o;
+        return pn.lineNum == lineNum && pn.prefix == prefix && pn.areaCode == areaCode;
+    }
+
+    // Ao sobrescrever equals, também é necessário sobrescrever hashCode:
+    // objetos iguais segundo equals precisam ter o mesmo código hash.
 }
